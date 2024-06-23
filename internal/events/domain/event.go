@@ -38,7 +38,7 @@ type Event struct {
 	Tickets []Ticket
 }
 
-func ( e *Event) Validate() error {
+func ( e Event) Validate() error {
 	if e.Name == "" {
 		return ErrEventNameIsRequired
 	}
@@ -52,4 +52,13 @@ func ( e *Event) Validate() error {
 		return ErrPriceMustBeGreaterThanZero
 	}
 	return nil
+}
+
+func (e *Event) AddSpot(name string) (*Spot, error) {
+	s, err := NewSpot(e, name)
+	if err != nil {
+		return nil, err
+	}
+	e.Spots = append(e.Spots, *s)
+	return s, nil
 }
