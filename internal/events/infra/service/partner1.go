@@ -8,7 +8,7 @@ import (
 )
 
 type Partner1 struct {
-	BaseUrl string
+	BaseURL string
 }
 
 // Partner1ReservationRequest represents the request to the partner1 reservation endpoint
@@ -39,7 +39,7 @@ func (p *Partner1) MakeReservation(req *ReservationRequest) ([]ReservationRespon
 	if err != nil {
 		return nil, err
 	}
-	url := fmt.Sprintf("%s/events/%s/reserve", p.BaseUrl, req.EventID)
+	url := fmt.Sprintf("%s/events/%s/reserve", p.BaseURL, req.EventID)
 	httpReq, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
