@@ -1,94 +1,94 @@
 # go-sales-api 🎫
 
-## Descrição 📄
-A `go-sales-api` é uma API para vendas de ingressos, onde parceiros fornecem informações e vendemos seus ingressos. A aplicação gerencia eventos, assentos e ingressos.
+## Description 📄
+`go-sales-api` is an API for ticket sales, where partners provide information and we sell their tickets. The application manages events, seats, and tickets.
 
-## Requisitos 📋
+## Requirements 📋
 - Go 1.16+
 - Docker
 - Docker Compose
 - MySQL
 
-## Instalação 🛠️
-1. Clone o repositório:
+## Installation 🛠️
+1. Clone the repository:
    ```bash
    git clone https://github.com/salmomascarenhas/go-sales-api.git
    cd go-sales-api
    ```
 
-2. Configure o ambiente:
-   - Edite `docker-compose.yaml` conforme necessário.
-   - Verifique as configurações do banco de dados em `mysql-init/init.sql`.
+2. Configure the environment:
+   - Edit `docker-compose.yaml` as needed.
+   - Check the database settings in `mysql-init/init.sql`.
 
-3. Suba os containers Docker:
+3. Start the Docker containers:
    ```bash
    docker-compose up -d
    ```
 
-## Executando a Aplicação ▶️
-Você pode utilizar o Makefile para facilitar a execução da aplicação:
+## Running the Application ▶️
+You can use the Makefile to simplify running the application:
 
-1. Inicialize o banco de dados:
+1. Initialize the database:
    ```bash
    make init
    ```
 
-2. Gere os arquivos do Swagger:
+2. Generate Swagger files:
    ```bash
    make swag
    ```
 
-3. Compile o código:
+3. Compile the code:
    ```bash
    make build
    ```
 
-4. Execute o servidor:
+4. Run the server:
    ```bash
    make run
    ```
 
-## Estrutura do Projeto 🗂️
-- **cmd/**: Contém os arquivos principais para iniciar a aplicação.
-  - **events/main.go**: Ponto de entrada da aplicação.
+## Project Structure 🗂️
+- **cmd/**: Contains the main files to start the application.
+  - **events/main.go**: Application entry point.
 
-- **docs/**: Documentação e arquivos Swagger.
+- **docs/**: Documentation and Swagger files.
 
-- **internal/events/**: Código da aplicação, incluindo lógica de negócios e manipulação de dados.
-  - **domain/**: Contém as definições de domínios como `Event`, `Spot` e `Ticket`.
-    - **event.go**: Definição da estrutura e métodos de eventos.
-    - **spot.go**: Definição da estrutura e métodos de assentos.
-    - **ticket.go**: Definição da estrutura e métodos de ingressos.
-  - **infra/**: Infraestrutura, incluindo `http` handlers e repositórios.
-    - **http/**: Handlers HTTP para as rotas da aplicação.
-    - **repository/**: Implementação dos repositórios.
-    - **service/**: Serviços auxiliares e integração com parceiros.
-  - **usecase/**: Casos de uso da aplicação.
-    - **buy_tickets.go**: Caso de uso para compra de ingressos.
-    - **create_event.go**: Caso de uso para criação de eventos.
-    - **create_spots.go**: Caso de uso para criação de assentos.
-    - **get_event.go**: Caso de uso para obtenção de detalhes de eventos.
-    - **list_events.go**: Caso de uso para listar eventos.
-    - **list_spots.go**: Caso de uso para listar assentos.
+- **internal/events/**: Application code, including business logic and data handling.
+  - **domain/**: Contains domain definitions like `Event`, `Spot`, and `Ticket`.
+    - **event.go**: Structure and methods for events.
+    - **spot.go**: Structure and methods for seats.
+    - **ticket.go**: Structure and methods for tickets.
+  - **infra/**: Infrastructure, including `http` handlers and repositories.
+    - **http/**: HTTP handlers for application routes.
+    - **repository/**: Repository implementations.
+    - **service/**: Auxiliary services and partner integration.
+  - **usecase/**: Application use cases.
+    - **buy_tickets.go**: Use case for ticket purchase.
+    - **create_event.go**: Use case for event creation.
+    - **create_spots.go**: Use case for seat creation.
+    - **get_event.go**: Use case for retrieving event details.
+    - **list_events.go**: Use case for listing events.
+    - **list_spots.go**: Use case for listing seats.
 
-- **mysql-init/**: Scripts de inicialização do banco de dados MySQL.
-  - **init.sql**: Script SQL para inicialização do banco de dados.
+- **mysql-init/**: MySQL database initialization scripts.
+  - **init.sql**: SQL script for database initialization.
 
-- **Makefile**: Arquivo para automatização de tarefas comuns no desenvolvimento.
+- **Makefile**: File for automating common development tasks.
 
-## Rotas 🌐
-### Eventos
-- **GET /events**: Lista todos os eventos.
-- **POST /events**: Cria um novo evento.
-- **GET /events/{eventID}**: Detalhes de um evento específico.
-- **GET /events/{eventID}/spots**: Lista todos os assentos de um evento.
-- **POST /events/{eventID}/spots**: Cria novos assentos para um evento.
+## Routes 🌐
+### Events
+- **GET /events**: Lists all events.
+- **POST /events**: Creates a new event.
+- **GET /events/{eventID}**: Details of a specific event.
+- **GET /events/{eventID}/spots**: Lists all seats for an event.
+- **POST /events/{eventID}/spots**: Creates new seats for an event.
 
-### Compra de Ingressos
-- **POST /checkout**: Compra ingressos para um evento específico.
+### Ticket Purchase
+- **POST /checkout**: Purchases tickets for a specific event.
 
-## Notas 📌
-- Certifique-se de que todas as dependências estão instaladas antes de executar a aplicação.
-- Consulte a documentação oficial do Go para dúvidas sobre o ambiente de desenvolvimento.
+## Notes 📌
+- Ensure all dependencies are installed before running the application.
+- Refer to the official Go documentation for development environment queries.
 
-Para mais detalhes, você pode visitar o repositório no [GitHub](https://github.com/salmomascarenhas/go-sales-api).
+For more details, you can visit the repository on [GitHub](https://github.com/salmomascarenhas/go-sales-api).
