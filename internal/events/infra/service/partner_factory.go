@@ -11,15 +11,13 @@ type DefaultPartnerFactory struct {
 }
 
 func NewPartnerFactory(partnerBaseURLs map[int]string) PartnerFactory {
-	return &DefaultPartnerFactory{
-		partnerBaseURLs: partnerBaseURLs,
-	}
+	return &DefaultPartnerFactory{partnerBaseURLs: partnerBaseURLs}
 }
 
 func (f *DefaultPartnerFactory) CreatePartner(partnerID int) (Partner, error) {
 	baseURL, ok := f.partnerBaseURLs[partnerID]
 	if !ok {
-		return nil, fmt.Errorf("unknown partner id: %d", partnerID)
+		return nil, fmt.Errorf("unsupported partner ID: %d", partnerID)
 	}
 
 	switch partnerID {
@@ -28,6 +26,6 @@ func (f *DefaultPartnerFactory) CreatePartner(partnerID int) (Partner, error) {
 	case 2:
 		return &Partner2{BaseURL: baseURL}, nil
 	default:
-		return nil, fmt.Errorf("unknown partner id: %d", partnerID)
+		return nil, fmt.Errorf("unsupported partner ID: %d", partnerID)
 	}
 }
