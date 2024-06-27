@@ -11,62 +11,64 @@ type Partner1 struct {
 	BaseURL string
 }
 
-// Partner1ReservationRequest represents the request to the partner1 reservation endpoint
 type Partner1ReservationRequest struct {
-	Spots []string `json:"spots"`
-	TicketKind string `json:"ticket_kind"`
-	Email string `json:"email"`
+	Spots      []string `json:"spots"`
+	TicketKind string   `json:"ticket_kind"`
+	Email      string   `json:"email"`
 }
 
-// Partner1ReservationResponse represents the response from the partner1 reservation endpoint
 type Partner1ReservationResponse struct {
-	ID string `json:"id"`
-	Email string `json:"email"`
-	Spot string `json:"spot"`
+	ID         string `json:"id"`
+	Email      string `json:"email"`
+	Spot       string `json:"spot"`
 	TicketKind string `json:"ticket_kind"`
-	Status string `json:"status"`
-	EventID string `json:"event_id"`
+	Status     string `json:"status"`
+	EventID    string `json:"event_id"`
 }
 
 func (p *Partner1) MakeReservation(req *ReservationRequest) ([]ReservationResponse, error) {
 	partnerReq := Partner1ReservationRequest{
-		Spots: req.Spots,
+		Spots:      req.Spots,
 		TicketKind: req.TicketKind,
-		Email: req.Email,
+		Email:      req.Email,
 	}
 
 	body, err := json.Marshal(partnerReq)
 	if err != nil {
 		return nil, err
 	}
+
 	url := fmt.Sprintf("%s/events/%s/reserve", p.BaseURL, req.EventID)
 	httpReq, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
-	client:= &http.Client{}
-	httpRes, err := client.Do(httpReq)
+
+	client := &http.Client{}
+	httpResp, err := client.Do(httpReq)
 	if err != nil {
 		return nil, err
 	}
-	defer httpRes.Body.Close()
-	if httpReq.Response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("unexpected status code: %d", httpReq.Response.StatusCode)
+	defer httpResp.Body.Close()
+
+	if httpResp.StatusCode != http.StatusCreated {
+		return nil, fmt.Errorf("reservation failed with status code: %d", httpResp.StatusCode)
 	}
 
-	var partnerRes []Partner1ReservationResponse
-	if err := json.NewDecoder(httpRes.Body).Decode(&partnerRes); err != nil {
+	var partnerResp []Partner1ReservationResponse
+	if err := json.NewDecoder(httpResp.Body).Decode(&partnerResp); err != nil {
 		return nil, err
 	}
 
-	responses := make([]ReservationResponse, len(partnerRes))
-	for i, pR := range partnerRes {
+	responses := make([]ReservationResponse, len(partnerResp))
+	for i, r := range partnerResp {
 		responses[i] = ReservationResponse{
-			ID: pR.ID,
-			Spot: pR.Spot,	
-			Status: pR.Status,
+			ID:     r.ID,
+			Spot:   r.Spot,
+			Status: r.Status,
 		}
 	}
+
 	return responses, nil
-}	
+}
