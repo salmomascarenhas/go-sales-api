@@ -12,11 +12,11 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	_ "github.com/devfullcycle/imersao18/golang/docs" // Import the generated docs
-	httpHandler "github.com/devfullcycle/imersao18/golang/internal/events/infra/http"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/repository"
-	"github.com/devfullcycle/imersao18/golang/internal/events/infra/service"
-	"github.com/devfullcycle/imersao18/golang/internal/events/usecase"
+	_ "github.com/salmomascarenhas/go-sales-api/docs" // Import the generated docs
+	httpHandler "github.com/salmomascarenhas/go-sales-api/internal/events/infra/http"
+	"github.com/salmomascarenhas/go-sales-api/internal/events/infra/repository"
+	"github.com/salmomascarenhas/go-sales-api/internal/events/infra/service"
+	"github.com/salmomascarenhas/go-sales-api/internal/events/usecase"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
